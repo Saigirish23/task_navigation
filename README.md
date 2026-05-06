@@ -1,4 +1,4 @@
-# 🤖 Navigation Task — Testbed-T1.0.0
+# 🤖 Navigation Task
 
 **Hey Folks!** 👋
 
