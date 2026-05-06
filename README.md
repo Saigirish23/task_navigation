@@ -14,31 +14,18 @@ In this task, you'll wire up a complete Nav2 navigation stack for our custom dif
 task_navigation/
 ├── testbed_bringup/                  # Launches Gazebo world + robot + RViz
 │   ├── launch/
-│   │   └── testbed_full_bringup.launch.py
-│   ├── maps/
-│   │   ├── testbed_world.pgm         # Pre-built occupancy grid image
-│   │   └── testbed_world.yaml        # Map metadata (resolution, origin, etc.)
-│   ├── CMakeLists.txt
-│   └── package.xml
+│   └──maps/
 │
 ├── testbed_description/              # Robot model (URDF/Xacro) + RViz configs
 │   ├── launch/
-│   │   ├── robot_description.launch.py
-│   │   └── testbed_rviz_barebones.launch.py
 │   ├── meshes/                       # STL meshes for the robot
 │   ├── rviz/                         # RViz config files
-│   ├── urdf/                         # Robot URDF/Xacro files
-│   ├── CMakeLists.txt
-│   └── package.xml
+│   └── urdf/                         # Robot URDF/Xacro files
 │
 ├── testbed_gazebo/                   # Gazebo simulation world + models
 │   ├── launch/
-│   │   ├── spawn_playground.launch.py
-│   │   └── spawn_testbed.launch.py
 │   ├── models/                       # Custom Gazebo models (walls, rooms, etc.)
-│   ├── worlds/                       # .world files for Gazebo
-│   ├── CMakeLists.txt
-│   └── package.xml
+│   └── worlds/                       # .world files for Gazebo
 │
 ├── testbed_navigation/               # ⭐ YOUR WORKSPACE — Nav2 stack
 │   ├── config/
@@ -103,7 +90,7 @@ sudo apt install -y \
 ### 3. Clone and Build
 
 ```bash
-# Create your workspace (skip if you already have one)
+# Create your workspace
 mkdir -p ~/nav_ws/src
 cd ~/nav_ws/src
 
@@ -112,6 +99,7 @@ git clone https://github.com/Saigirish23/task_navigation.git .
 
 # Go back to workspace root and build
 cd ~/nav_ws
+source /opt/ros/humble/setup.bash
 colcon build
 source install/setup.bash
 ```
@@ -125,6 +113,7 @@ source install/setup.bash
 To bring up the Gazebo world with the robot and RViz:
 
 ```bash
+source install/setup.bash
 ros2 launch testbed_bringup testbed_full_bringup.launch.py
 ```
 
@@ -214,36 +203,6 @@ Specifically, check out:
 
 **Fix:** Make sure you've done a `colcon build` **and** sourced `install/setup.bash`. The map files need to be installed to the share directory.
 
-### 4. ⏳ Lifecycle Nodes Not Transitioning
-
-```
-[WARN] [lifecycle_manager]: Node amcl is not yet active...
-```
-
-**Why:** The lifecycle manager can't activate a node if it hasn't fully started yet. This usually happens when nodes are started in the wrong order or the `autostart` parameter is missing.
-
-**Fix:** Make sure your lifecycle manager has `'autostart': True` and the `'node_names'` list matches the exact names of the nodes you're launching.
-
-### 5. 🔄 Transform (TF) Errors
-
-```
-[WARN] Timed out waiting for transform from base_footprint to map
-```
-
-**Why:** AMCL hasn't published the `map → odom` transform yet, or the robot state publisher isn't running.
-
-**Fix:** Ensure the bringup launch is running first (it starts robot_state_publisher). AMCL needs a few seconds + an initial pose estimate to start publishing transforms.
-
-### 6. 🔨 Build Errors After Cloning
-
-```
-Could not find a package configuration file provided by "nav2_common"
-```
-
-**Why:** Missing Nav2 dependencies.
-
-**Fix:** Run the install command from the [Setup](#-setup) section to install all required Nav2 packages.
-
 ---
 
 ## 🎬 Expected Result
@@ -265,18 +224,21 @@ Once everything is working, you should be able to:
 ```bash
 # 1. Build the workspace
 cd ~/nav_ws
+source /opt/ros/humble/setup.bash
 colcon build
 source install/setup.bash
 
 # 2. Terminal 1 — Launch the simulation
+source install/setup.bash
 ros2 launch testbed_bringup testbed_full_bringup.launch.py
 
 # 3. Terminal 2 — Launch navigation (includes map + localization + nav2 stack)
+source install/setup.bash
 ros2 launch testbed_navigation navigation.launch.py
 ```
 
 > 💡 **Pro Tip:** The `navigation.launch.py` is designed to include `map_loader.launch.py` and `localization.launch.py` internally. So once all three files are complete, you only need to run the navigation launch!
 
 ---
-
+Feel free to ask any doubts or clarifcations.
 **Good luck, and happy navigating!** 🧭🤖
