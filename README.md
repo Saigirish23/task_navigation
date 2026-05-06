@@ -73,7 +73,11 @@ task_navigation/
 
 Follow the official guide: [ROS 2 Humble Installation](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 
-### 2. Install Nav2 and Dependencies
+### 2. Install Gazebo Classic (if not already installed)
+
+Follow the official guide: [Gazebo Installation](https://classic.gazebosim.org/tutorials?tut=install_ubuntu)
+
+### 3. Install Nav2 and Dependencies
 
 ```bash
 sudo apt update
@@ -87,7 +91,7 @@ sudo apt install -y \
   ros-humble-rviz2
 ```
 
-### 3. Clone and Build
+### 4. Clone and Build
 
 ```bash
 # Create your workspace
@@ -154,7 +158,7 @@ This launch file should bring up the **full Nav2 navigation stack** — planner,
   - `waypoint_follower` — follows a series of waypoints
   - `collision_monitor` — safety collision monitoring
   - `nav2_lifecycle_manager` — manages all the above nodes
-
+  
 ### 📖 Reference
 
 Refer to the official Nav2 repository for examples of how these launch files are structured:
@@ -164,6 +168,11 @@ Refer to the official Nav2 repository for examples of how these launch files are
 Specifically, check out:
 - `nav2_bringup/launch/` — for launch file patterns
 - `nav2_bringup/params/` — to understand how params are loaded
+
+### Approach(best)
+
+~ Open the cloned folder using **code editors** such as **VSCode/Antigravity**
+~ Parse the folder and find the files to be coded, code them and save them.
 
 ### ✅ Already Done For You
 
