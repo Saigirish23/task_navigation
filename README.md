@@ -51,9 +51,6 @@ task_navigation/
 │   ├── CMakeLists.txt
 │   └── package.xml
 │
-├── media/
-│   └── Navigation_assignment.mp4     # Demo video of the final result
-│
 └── README.md                         # ← You are here!
 ```
 
@@ -259,7 +256,7 @@ Once everything is working, you should be able to:
 4. Click a **Nav2 Goal** (2D Goal Pose) in RViz
 5. Watch the robot **autonomously navigate** to the goal! 🎉
 
-Check out the demo video in `media/Navigation_assignment.mp4` to see what the final result looks like!
+
 
 ---
 
